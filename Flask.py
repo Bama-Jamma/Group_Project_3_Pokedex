@@ -122,5 +122,55 @@ def get_speed_chart(pokedex_number):
 
     return jsonify(speed_chart), 200
 
+
+@app.route('/catch-rate-comparison/<int:pokedex_number>', methods=['GET'])
+def get_catch_rate_comparison(pokedex_number):
+    conn = sqlite3.connect('sqlite_database/pokemon_db.sqlite')
+    cursor = conn.cursor()
+
+    # Fetch the catch rate of the selected Pokémon from the 'pokemon_data' table
+    cursor.execute("SELECT catch_rate, type_1 FROM pokemon_data WHERE pokedex_number = ?", (pokedex_number,))
+    pokemon_data = cursor.fetchone()
+
+    if not pokemon_data:
+        return jsonify({"error": "Pokemon not found"}), 404
+
+    catch_rate = pokemon_data[0]
+    pokemon_type = pokemon_data[1]
+
+    # Fetch the average catch rate of all Pokémon from the 'pokemon_data' table
+    cursor.execute("SELECT AVG(catch_rate) FROM pokemon_data")
+    average_catch_rate_all = cursor.fetchone()[0]
+
+    # Fetch the average catch rate of Pokémon with the same type as the selected Pokémon
+    cursor.execute("SELECT AVG(catch_rate) FROM pokemon_data WHERE type_1 = ?", (pokemon_type,))
+    average_catch_rate_same_type = cursor.fetchone()[0]
+
+    conn.close()
+
+    catch_rate_comparison = {
+        "pokedex_number": pokedex_number,
+        "catch_rate": catch_rate,
+        "average_catch_rate_all": average_catch_rate_all,
+        "average_catch_rate_same_type": average_catch_rate_same_type
+    }
+
+    return jsonify(catch_rate_comparison), 200
+
+@app.route('/pokemon-status/<int:pokedex_number>', methods=['GET'])
+def get_pokemon_status(pokedex_number):
+    conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT status FROM pokemon_data WHERE pokedex_number = ?", (pokedex_number,))
+    status = cursor.fetchone()
+
+    if not status:
+        return jsonify({"error": "Pokemon not found"}), 404
+
+    conn.close()
+    return jsonify({"status": status[0]}), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
