@@ -3,6 +3,21 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    content = """
+    Welcome to the Pokedex!
+
+    <ul>Endpoints:</ul>
+
+        <li>'/pokemon-profile/POKEDEX_NUMBER'</li>
+        <li>'/move-distribution/POKEDEX_NUMBER'</li>
+        <li>'/stat-comparison/POKEDEX_NUMBER'</li>
+        <li>'/speed-chart/POKEDEX_NUMBER'</li>
+        <li>'/all_pokemon_indexes/'</li>
+    """
+    return content
+
 @app.route('/pokemon-profile/<int:pokedex_number>', methods=['GET'])
 def get_pokemon_profile(pokedex_number):
     conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
@@ -15,17 +30,17 @@ def get_pokemon_profile(pokedex_number):
         return jsonify({"error": "Pokemon not found"}), 404
 
     pokemon_profile = {
-        "pokedex_number": pokemon_data[1],
-        "name": pokemon_data[2],
-        "type_1": pokemon_data[9],
-        "type_2": pokemon_data[10],
-        "abilities": [pokemon_data[13], pokemon_data[14], pokemon_data[15]],
-        "hp": pokemon_data[18],
-        "attack": pokemon_data[19],
-        "defense": pokemon_data[20],
-        "sp_attack": pokemon_data[21],
-        "sp_defense": pokemon_data[22],
-        "speed": pokemon_data[23]
+        "pokedex_number": pokemon_data[0],
+        "name": pokemon_data[1],
+        "type_1": pokemon_data[7],
+        "type_2": pokemon_data[8],
+        "abilities": [pokemon_data[12], pokemon_data[13], pokemon_data[14]],
+        "hp": pokemon_data[16],
+        "attack": pokemon_data[17],
+        "defense": pokemon_data[18],
+        "sp_attack": pokemon_data[19],
+        "sp_defense": pokemon_data[20],
+        "speed": pokemon_data[21]
     }
 
     conn.close()
@@ -54,6 +69,18 @@ def get_move_distribution(pokedex_number):
 
     conn.close()
     return jsonify(move_distribution), 200
+
+@app.route('/all_pokemon_indexes/', methods=['GET'])
+def get_all_pokemon_indexes():
+    conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
+    cursor = conn.cursor()
+    cursor.execute("SELECT pokedex_number FROM pokemon_data")
+    pokemon_index = cursor.fetchall()
+    all_pokemon_indexes  = {
+        "pokedex_number": pokemon_index
+    }
+    conn.close()
+    return jsonify(all_pokemon_indexes), 200
 
 @app.route('/stat-comparison/<int:pokedex_number>', methods=['GET'])
 def get_stat_comparison(pokedex_number):
