@@ -19,10 +19,32 @@ body {
     border-radius: 20px;
     padding: 10px;
     box-sizing: border-box;
-    transition: height 1s;
+    transition: height 1s ease-in-out;
     position: relative;
     overflow: hidden;
-    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.5); /* Enhanced shadow for 3D effect */
+    transform: perspective(600px) rotateX(0deg); /* Perspective added for 3D effect */
+    transform-style: preserve-3d;
+}
+
+.shell {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.3); /* Enhanced shadow for 3D effect */
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2); /* Enhanced shadow for 3D effect */
 }
 
 .pokedex.closed .inner-screen {
@@ -31,46 +53,7 @@ body {
 
 .pokedex.open {
     height: 500px;
-}
-
-.shell {
-    width: 100%;
-    height: 20%;
-    background: radial-gradient(circle, #b30000, #800000);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-}
-
-.porthole {
-    width: 100px;
-    height: 50px;
-    position: absolute;
-    z-index: 2;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-}
-
-.top-porthole {
-    border-left: 10px solid black;
-    border-right: 10px solid black;
-    border-top: 10px solid black;
-    border-bottom: none;
-    border-radius: 100px 100px 0 0;
-    top: 50%;
-    background-color: #87CEFA;
-}
-
-.bottom-porthole {
-    border-left: 10px solid black;
-    border-right: 10px solid black;
-    border-bottom: 10px solid black;
-    border-top: none;
-    border-radius: 0 0 100px 100px;
-    bottom: 50%;
-    background-color: #87CEFA;
+    transform: perspective(600px) rotateX(-10deg); /* Perspective added for 3D effect */
 }
 
 .inner-screen {
@@ -81,6 +64,7 @@ body {
     position: relative;
     z-index: 0;
     transform: rotate(90deg);
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2); /* Enhanced shadow for 3D effect */
 }
 
 .screen {
@@ -94,22 +78,20 @@ body {
     background-blend-mode: overlay;
     border: 5px solid #fff;
     border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2); /* Enhanced shadow for 3D effect */
 }
 
-.dot {
-    width: 10px;
-    height: 10px;
-    background-color: black;
-    border-radius: 50%;
+.gif {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    top: 20%;
+    top: 0;
+    left: 0;
+    border: none;
 }
 
-.left-dot {
-    left: 20%;
-}
 
-.right-dot {
-    right: 20%;
-}
+
+
+
+
