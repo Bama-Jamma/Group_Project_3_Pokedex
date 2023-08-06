@@ -5,17 +5,8 @@
   <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
-  <div id="pokedex" class="pokedex closed">
-    <div class="shell top-shell">
-      <div class="dot indicator-left"></div>
-      <div class="dot indicator-right"></div>
-      <div class="dot left-dot"></div>
-      <div class="dot right-dot"></div>
-    </div>
-  
-      <div class="inner-screen">
-        <div class="screen">
-          <!-- Add Pokedex content here -->
+      <div class="temp-welcome">
+        <div class="welcome">
           <h2>Welcome to the Pokedex</h2>
           <img src="https://giphy.com/embed/YyL1MxPDVJ9q8" class="gif" frameBorder="0">
           <p>Search for a Pokemon:</p>
@@ -28,20 +19,16 @@
             <button type="submit">Search</button>
         </form>
       </div>
+
+      <!-- Blank div for pokemon profile -->
+      <div id="pokemon_profile_main"></div>
     
 
     <!-- HTML content for comparison radar chart -->
     <div id="comparison_web" style="width: 400px; height: 300px;"></div>
 
     <!-- HTML content for speed comparison chart -->
-    <!-- <div id="speed_chart" style="width: 100px; height: 100px;"></div> -->
-  
-    <div class="shell bottom-shell">
-      <div class="dot button-a"></div>
-      <div class="dot button-b"></div>
-      <div class="porthole bottom-porthole"></div>
-    </div>
-  </div>
+    <div id="speed_chart"></div>
 
 <!-- D3.js -->
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -49,8 +36,6 @@
 <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-bundle.min.js"></script>
 <!-- Our Js -->
 <script src="static/pokedex.js"></script>
-
-
 
 </body>
 </html>
