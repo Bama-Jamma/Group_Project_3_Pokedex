@@ -1,7 +1,9 @@
 import sqlite3
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/pokemon-profile/<int:pokedex_number>', methods=['GET'])
 def get_pokemon_profile(pokedex_number):
@@ -30,6 +32,28 @@ def get_pokemon_profile(pokedex_number):
 
     conn.close()
     return jsonify(pokemon_profile), 200
+
+@app.route('/pokemons/', methods=['GET'])
+def get_pokemons():
+
+    conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
+    cursor = conn.cursor()
+    cursor.execute("SELECT pokedex_number, name FROM pokemon_data")
+    pokemon_data = cursor.fetchall()
+
+    pokemons = []
+
+    for row in pokemon_data:
+        pokemons.append({'pokemon_index_number':row[0],'name':row[1]})
+
+    all_pokemons  = {
+        "pokemons": pokemons
+    }
+
+    conn.close()
+    
+    return jsonify(all_pokemons)
+
 
 @app.route('/move-distribution/<int:pokedex_number>', methods=['GET'])
 def get_move_distribution(pokedex_number):
