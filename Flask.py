@@ -146,6 +146,5 @@ def get_speed_chart(pokedex_number):
 
     return jsonify(speed_chart), 200
 
-# Runs the app on the main port of a python server
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
