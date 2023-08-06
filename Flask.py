@@ -1,8 +1,16 @@
 import sqlite3
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
+CORS(app)
 
+# Returns the home page html
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# Returns a json of a pokemon and some information on it
 @app.route('/pokemon-profile/<int:pokedex_number>', methods=['GET'])
 def get_pokemon_profile(pokedex_number):
     conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
@@ -31,6 +39,7 @@ def get_pokemon_profile(pokedex_number):
     conn.close()
     return jsonify(pokemon_profile), 200
 
+# Returns the move distribution of a chosen pokemon
 @app.route('/move-distribution/<int:pokedex_number>', methods=['GET'])
 def get_move_distribution(pokedex_number):
     conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
@@ -55,6 +64,20 @@ def get_move_distribution(pokedex_number):
     conn.close()
     return jsonify(move_distribution), 200
 
+# Returns all the pokedex numbers & names
+@app.route('/all_pokemon_indexes/', methods=['GET'])
+def get_all_pokemon_indexes():
+    conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
+    cursor = conn.cursor()
+    cursor.execute("SELECT pokedex_number FROM pokemon_data")
+    pokemon_index = cursor.fetchall()
+    all_pokemon_indexes  = {
+        "pokedex_number": pokemon_index
+    }
+    conn.close()
+    return jsonify(all_pokemon_indexes), 200
+
+# Returns the stats of a selected pokemon and the average of all pokemon
 @app.route('/stat-comparison/<int:pokedex_number>', methods=['GET'])
 def get_stat_comparison(pokedex_number):
     conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
@@ -71,13 +94,13 @@ def get_stat_comparison(pokedex_number):
 
     stat_comparison = {
         "selected_pokemon": {
-            "name": selected_pokemon_data[2],
-            "hp": selected_pokemon_data[18],
-            "attack": selected_pokemon_data[19],
-            "defense": selected_pokemon_data[20],
-            "sp_attack": selected_pokemon_data[21],
-            "sp_defense": selected_pokemon_data[22],
-            "speed": selected_pokemon_data[23]
+            "name": selected_pokemon_data[1],
+            "hp": selected_pokemon_data[16],
+            "attack": selected_pokemon_data[17],
+            "defense": selected_pokemon_data[18],
+            "sp_attack": selected_pokemon_data[19],
+            "sp_defense": selected_pokemon_data[20],
+            "speed": selected_pokemon_data[21]
         },
         "average_stats": {
             "hp": average_stats[0],
@@ -92,6 +115,7 @@ def get_stat_comparison(pokedex_number):
     conn.close()
     return jsonify(stat_comparison), 200
 
+# Returns a comparison of speed between pokemon
 @app.route('/speed-chart/<int:pokedex_number>', methods=['GET'])
 def get_speed_chart(pokedex_number):
     conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
@@ -122,55 +146,5 @@ def get_speed_chart(pokedex_number):
 
     return jsonify(speed_chart), 200
 
-
-@app.route('/catch-rate-comparison/<int:pokedex_number>', methods=['GET'])
-def get_catch_rate_comparison(pokedex_number):
-    conn = sqlite3.connect('sqlite_database/pokemon_db.sqlite')
-    cursor = conn.cursor()
-
-    # Fetch the catch rate of the selected Pokémon from the 'pokemon_data' table
-    cursor.execute("SELECT catch_rate, type_1 FROM pokemon_data WHERE pokedex_number = ?", (pokedex_number,))
-    pokemon_data = cursor.fetchone()
-
-    if not pokemon_data:
-        return jsonify({"error": "Pokemon not found"}), 404
-
-    catch_rate = pokemon_data[0]
-    pokemon_type = pokemon_data[1]
-
-    # Fetch the average catch rate of all Pokémon from the 'pokemon_data' table
-    cursor.execute("SELECT AVG(catch_rate) FROM pokemon_data")
-    average_catch_rate_all = cursor.fetchone()[0]
-
-    # Fetch the average catch rate of Pokémon with the same type as the selected Pokémon
-    cursor.execute("SELECT AVG(catch_rate) FROM pokemon_data WHERE type_1 = ?", (pokemon_type,))
-    average_catch_rate_same_type = cursor.fetchone()[0]
-
-    conn.close()
-
-    catch_rate_comparison = {
-        "pokedex_number": pokedex_number,
-        "catch_rate": catch_rate,
-        "average_catch_rate_all": average_catch_rate_all,
-        "average_catch_rate_same_type": average_catch_rate_same_type
-    }
-
-    return jsonify(catch_rate_comparison), 200
-
-@app.route('/pokemon-status/<int:pokedex_number>', methods=['GET'])
-def get_pokemon_status(pokedex_number):
-    conn = sqlite3.connect('sqlite_database\pokemon_db.sqlite')
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT status FROM pokemon_data WHERE pokedex_number = ?", (pokedex_number,))
-    status = cursor.fetchone()
-
-    if not status:
-        return jsonify({"error": "Pokemon not found"}), 404
-
-    conn.close()
-    return jsonify({"status": status[0]}), 200
-
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8000, debug=True)

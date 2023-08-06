@@ -1,3 +1,15 @@
+.bar1 {
+    /* Add a border to the bars in the speed graph */
+    stroke: #000;
+    stroke-width: 1;
+  }
+
+.bar2 {
+    /* Add a border to the bars in the speed graph */
+    stroke: #000;
+    stroke-width: 1;
+  }
+
 body {
     background-color: #f0f0f0;
     display: flex;
