@@ -1,43 +1,52 @@
 import sqlite3
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
+import urllib.parse
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/pokemon-profile/<int:pokedex_number>/<variation>', methods=['GET'])
-def get_pokemon_profile(pokedex_number, variation):
+@app.route('/pokemon-profile/<int:pokedex_number>', methods=['GET'])
+def get_pokemon_profile(pokedex_number):
+    return get_pokemon_variation_profile(pokedex_number, None)
+
+@app.route('/pokemon-profile/<int:pokedex_number>/<path:variation>', methods=['GET'])
+def get_pokemon_variation_profile(pokedex_number, variation):
     conn = sqlite3.connect('sqlite_database/pokemon_db.sqlite')
     cursor = conn.cursor()
 
-    # Fetch the Pokémon data for the selected variation from the 'pokemon_data' table
-    cursor.execute("SELECT * FROM pokemon_data WHERE pokedex_number = ?", (pokedex_number,))
-    all_pokemon_data = cursor.fetchall()
+    # Construct the query to fetch the Pokémon data based on variation
+    query = "SELECT * FROM pokemon_data WHERE pokedex_number = ?"
+    params = (pokedex_number,)
 
-    selected_pokemon_data = None
-    for pokemon_data in all_pokemon_data:
-        if variation.lower() in pokemon_data[2].lower():
-            selected_pokemon_data = pokemon_data
-            break
+    if variation:
+        query += " AND name = ?"
+        params += (variation,)
 
-    if not selected_pokemon_data:
-        return jsonify({"error": "Pokemon not found"}), 404
-
-    pokemon_profile = {
-        "pokedex_number": selected_pokemon_data[1],
-        "name": selected_pokemon_data[2],
-        "type_1": selected_pokemon_data[9],
-        "type_2": selected_pokemon_data[10],
-        "abilities": [selected_pokemon_data[13], selected_pokemon_data[14], selected_pokemon_data[15]],
-        "hp": selected_pokemon_data[18],
-        "attack": selected_pokemon_data[19],
-        "defense": selected_pokemon_data[20],
-        "sp_attack": selected_pokemon_data[21],
-        "sp_defense": selected_pokemon_data[22],
-        "speed": selected_pokemon_data[23]
-    }
+    cursor.execute(query, params)
+    pokemon_data = cursor.fetchone()
 
     conn.close()
+
+    if not pokemon_data:
+        return jsonify({"error": "Pokemon not found"}), 404
+
+    # Construct and return the Pokémon profile
+    pokemon_profile = {
+           "pokedex_number": pokemon_data[0],
+        "name": pokemon_data[1],
+        "type_1": pokemon_data[7],
+        "type_2": pokemon_data[8],
+        "abilities": [pokemon_data[12], pokemon_data[13], pokemon_data[14]],
+        "hp": pokemon_data[16],
+        "attack": pokemon_data[17],
+        "defense": pokemon_data[18],
+        "sp_attack": pokemon_data[19],
+        "sp_defense": pokemon_data[20],
+        "speed": pokemon_data[21]
+        # Include other attributes here
+    }
+
     return jsonify(pokemon_profile), 200
 
 @app.route('/catch-rate-comparison/<int:pokedex_number>/<variation>', methods=['GET'])
