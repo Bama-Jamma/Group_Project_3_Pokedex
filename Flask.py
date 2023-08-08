@@ -223,6 +223,7 @@ def get_speed_chart(pokedex_number, pokemon_name=None):
     return jsonify(speed_chart), 200
 
 
+
 if __name__ == '__main__':
-    app.run(port = 8000, debug=True)
+    app.run(port=8000, debug=True)
 
