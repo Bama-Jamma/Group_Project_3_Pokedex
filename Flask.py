@@ -1,10 +1,14 @@
 import sqlite3
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS, cross_origin
 import urllib.parse
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 CORS(app)
+# Returns the home page html
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/pokemon-profile/<int:pokedex_number>', methods=['GET'])
 def get_pokemon_profile(pokedex_number):
