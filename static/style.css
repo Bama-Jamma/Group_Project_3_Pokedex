@@ -1,0 +1,162 @@
+.bar1 {
+    /* Add a border to the bars in the speed graph */
+    stroke: #000;
+    stroke-width: 1;
+  }
+
+.bar2 {
+    /* Add a border to the bars in the speed graph */
+    stroke: #000;
+    stroke-width: 1;
+  }
+
+body {
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.pokedex {
+    width: 350px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: radial-gradient(circle, #b30000, #800000);
+    border-radius: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease; /* Only apply transition to transform property */
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.5);
+    transform: perspective(600px) rotateX(0deg);
+    transform-style: preserve-3d;
+}
+
+.shell {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+.pokedex.closed .inner-screen {
+    display: none;
+}
+
+.pokedex.open {
+    height: 500px;
+    transform: perspective(600px) rotateX(-10deg);
+}
+
+.inner-screen {
+    width: 90%;
+    height: 60%;
+    background-color: #87CEFA;
+    border-radius: 10px;
+    position: relative;
+    z-index: 0;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+.screen {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent),
+                #000;
+    background-blend-mode: overlay;
+    border: 5px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;  
+    color: white;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+    text-align: center;
+    padding-top: 20px; /* Adjust this as needed to move content down */
+    opacity: 0;
+    transition: none; /* Remove gradual opacity transition */
+}
+.pokedex.open .screen {
+    opacity: 1;
+}
+
+h2 {
+    margin: 0;
+    font-size: 1.2rem; /* Adjust font size here */
+}
+
+.pokemon-img {
+    width: 60%; /* Adjust image size here */
+    height: auto;
+    display: block;
+    margin: 10px auto; 
+}
+
+.gif {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+}
+
+.button-a, .button-b {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 10px;
+}
+
+.button-a {
+    right: 70px;
+}
+
+.button-b {
+    right: 30px;
+}
+
+.indicator-left, .indicator-right {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 10px;
+}
+
+.indicator-left {
+    left: 30px;
+}
+
+.indicator-right {
+    right: 30px;
+}
+
+.dot:hover {
+    background-color: #333;
+}  
