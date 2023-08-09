@@ -1,3 +1,4 @@
+// I wanna catch em all
 // Creates a function that searches the api endpoint for pokemon profile
 function fetchPokemonProfile(searchQuery) {
     return fetch(`/pokemon-profile/${searchQuery}`)
