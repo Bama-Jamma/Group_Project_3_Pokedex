@@ -7,9 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Data Visualization Project with Pokémon Data</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
 
+  <!---Test Comment-->
   <div class="container">
     <div class="row">
       <div class="col-md-12 jumbotron text-center">
@@ -25,9 +27,12 @@
             <h3 class="panel-title">Pokemon profile</h3>
           </div>
           <div id="pokemonProfile" class="panel-body">
+          <div id="pokemon_profile_main"></div>
           </div>
         </div>
       </div>
+
+      <div id="catchrate_infographic"></div>
 
       <div class="col-md-5">
         <div id="bar"></div>
@@ -42,12 +47,6 @@
       </div>
     </div>
   </div>
-
-<head>
-  <meta chartset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="static/style.css">
-</head>
-<body>
 
   <div id="pokedex" class="pokedex closed">
     <div class="shell top-shell">
@@ -84,10 +83,6 @@
         <button type="submit">Search</button>
     </form>
   </div>
-
-      <!-- Blank div for pokemon profile -->
-      <div id="pokemon_profile_main"></div>
-    
 
     <!-- HTML content for comparison radar chart -->
     <div id="comparison_web" style="width: 400px; height: 300px;"></div>
