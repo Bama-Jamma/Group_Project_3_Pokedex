@@ -16,11 +16,6 @@ function fetchPokemonSpeed(searchQuery) {
         .then(response => response.json())
 }
 
-function fetchPokemonCatch(searchQuery) {
-    return fetch(`/catch-rate-comparison/${searchQuery}`)
-        .then(response => response.json())
-}
-
 // Random color function
 function random_rgba() {
     let o = Math.round, r = Math.random, s = 255;
@@ -38,63 +33,6 @@ let random_color = random_rgba();
 let comparison_chart = null
 let searchQuery;
 
-// A function that creates our main pokemon info
-function mainPokemonProfile(primary_pokemon_data) {
-    //console.log(primary_pokemon_data)
-
-    // Attaches to our div and clears previous
-    const poke_profile = document.getElementById("pokemon_profile_main");
-    poke_profile.innerHTML = '';
-
-    // Puts the order we want the profile to show up as in a list 
-    const desiredOrder = ['name', 'pokedex_number', 'type_1', 'type_2', 'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed', 'abilities'];
-
-    // Reorders our json
-    const reorderedData = {};
-    desiredOrder.forEach(prop => {
-        if (primary_pokemon_data.hasOwnProperty(prop)) {
-            reorderedData[prop] = primary_pokemon_data[prop];
-        }
-    });
-
-    // Appends a new item to the list for each item in our data
-    for (const key in reorderedData) {
-        const listItem = document.createElement("li");
-
-        const formattedKey = key.replace(/_/g, " ").toUpperCase();
-
-        listItem.textContent = `${formattedKey}: ${reorderedData[key]}`;
-
-        poke_profile.appendChild(listItem);
-    }
-
-
-}
-
-// A function that creates an infographic table on a pokemons catch rate
-function catchrateInfo(pokemon_catch) {
-    const poke_catchinfo = document.getElementById("catchrate_infographic");
-    poke_catchinfo.innerHTML = '';
-
-    // Creates an element for each item in the json
-    for (const key in pokemon_catch) {
-        const listItem = document.createElement("li");
-
-        // Maps the list
-        let content;
-        if (key === "average_catch_rate_all") {
-            content = `All Pokemon Average Catch Rate: ${pokemon_catch[key].toFixed(2)}`;
-        } else if (key === "average_catch_rate_same_type") {
-            content = `Average Catch Rate of Same Type: ${pokemon_catch[key].toFixed(2)}`;
-        } else if (key === "catch_rate") {
-            content = `Catch Rate: ${pokemon_catch[key].toFixed(2)}`;
-        } else {
-            content = `${key}: ${pokemon_catch[key]}`;
-        }
-        listItem.textContent = content;
-        poke_catchinfo.appendChild(listItem);
-    }
-}
 
 // Function for drawing our Comparison Radar Chart(Spiderweb Chart)
 function createComparisonChart(selectedPokemonStats, averageStatsData, index, labels) {
@@ -264,12 +202,11 @@ document.getElementById("searchForm").addEventListener("submit", () => {
     searchQuery = document.getElementById("searchInput").value;
 
     // Calls our search functions at the same time to query all our needed data
-    Promise.all([fetchPokemonProfile(searchQuery), fetchPokemonStats(searchQuery), fetchPokemonSpeed(searchQuery), fetchPokemonCatch(searchQuery)])
-        .then(([primary_pokemon_data, average_pokemon_stats, pokemon_speed, pokemon_catch]) => {
+    Promise.all([fetchPokemonProfile(searchQuery), fetchPokemonStats(searchQuery), fetchPokemonSpeed(searchQuery)])
+        .then(([primary_pokemon_data, average_pokemon_stats, pokemon_speed]) => {
             console.log(primary_pokemon_data);
             console.log(average_pokemon_stats);
             console.log(pokemon_speed);
-            console.log(pokemon_catch);
       
             // Sets our data as arrays
             const averageStatsData = Object.values(average_pokemon_stats.average_stats);
@@ -283,10 +220,6 @@ document.getElementById("searchForm").addEventListener("submit", () => {
 
             // Array of labels for comparison chart
             const statLabels = ['Attack', 'Defense', 'HP', 'Special Attack', 'Special Defense', 'Speed'];
-
-            catchrateInfo(pokemon_catch)
-
-            mainPokemonProfile(primary_pokemon_data)
 
             // Create the stat comparison web chart
             createComparisonChart(selectedPokemonStats, averageStatsData, 3, statLabels);
@@ -335,7 +268,7 @@ pokedex.addEventListener('click', function() {
     var dropdown = document.getElementById('selDataset');
     
     // URL to fetch data from
-    var url = 'localhost:8000/pokemons/';
+    var url = 'http://127.0.0.1:5000/pokemons/';
 
     // Use XMLHttpRequest to read data from URL/server
     var request = new XMLHttpRequest();
@@ -366,7 +299,7 @@ init();
 
 // Function to fetch pokemon profile based on the value selcted in dropdown
 function optionChanged(selectedValue){
-  var url = 'localhost:8000/pokemon-profile/' + selectedValue;
+  var url = 'http://127.0.0.1:5000/pokemon-profile/' + selectedValue;
   
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
