@@ -1,4 +1,5 @@
-// I wanna catch em all
+
+// I wanna catch em a"ll
 // Creates a function that searches the api endpoint for pokemon profile
 function fetchPokemonProfile(searchQuery) {
     return fetch(`/pokemon-profile/${searchQuery}`)
@@ -330,13 +331,14 @@ pokedex.addEventListener('click', function() {
         pokedex.classList.add('closed');
     }
 });
-
+});
  function init() {
     // Select dropdown menu 
+
     var dropdown = document.getElementById('selDataset');
     
     // URL to fetch data from
-    var url = 'localhost:8000/pokemons/';
+    var url = 'http://127.0.0.1:8000/pokemons/';
 
     // Use XMLHttpRequest to read data from URL/server
     var request = new XMLHttpRequest();
@@ -367,7 +369,7 @@ init();
 
 // Function to fetch pokemon profile based on the value selcted in dropdown
 function optionChanged(selectedValue){
-  var url = 'localhost:8000/pokemon-profile/' + selectedValue;
+  var url = 'http://127.0.0.1:8000/pokemon-profile/' + selectedValue;
   
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
@@ -377,11 +379,11 @@ function optionChanged(selectedValue){
     if (request.status === 200) {
       var data = JSON.parse(request.responseText);
 
-      document.getElementById('pokemonProfile').innerText = JSON.stringify(data, null, 2);
+      document.getElementById('pokemon_profile_main').innerText = JSON.stringify(data, null, 2);
 
      } 
      // If Request to API fails, log error
      else {
       console.error(error);
     }     
-  }}});
+  }}
