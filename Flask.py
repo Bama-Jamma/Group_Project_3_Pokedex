@@ -177,7 +177,6 @@ def get_catch_rate_comparison(pokedex_number, variation=None):
     conn.close()
 
     catch_rate_comparison = {
-        "pokedex_number": pokedex_number,
         "catch_rate": catch_rate,
         "average_catch_rate_all": average_catch_rate_all,
         "average_catch_rate_same_type": average_catch_rate_same_type
