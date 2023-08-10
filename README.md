@@ -18,6 +18,7 @@ The project's data is sourced from the following datasets:
 
 - [Pokemon Dataset on Kaggle](https://www.kaggle.com/rounakbanik/pokemon): Provides comprehensive information about various aspects of Pokemon, including profiles and statistics.
 - [Pokemon Images Dataset on Kaggle](https://www.kaggle.com/datasets/kvpratama/pokemon-images-dataset): Offers a collection of Pokemon images for visualization purposes.
+- [PokeAPI](https://pokeapi.co/): Provides us with our sprites
 
 ## Libraries Used
 
