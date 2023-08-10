@@ -10,10 +10,8 @@
     stroke-width: 1;
   }
 
-body {
+  body {
     background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
@@ -23,6 +21,7 @@ body {
 .pokedex {
     width: 350px;
     height: 250px;
+    margin: 0 auto; /* Center the element horizontally */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -31,7 +30,7 @@ body {
     border-radius: 20px;
     padding: 10px;
     box-sizing: border-box;
-    transition: transform 0.3s ease; /* Only apply transition to transform property */
+    transition: transform 0.3s ease;
     position: relative;
     overflow: hidden;
     box-shadow: 0px 10px 20px rgba(0,0,0,0.5);
@@ -160,3 +159,37 @@ h2 {
 .dot:hover {
     background-color: #333;
 }  
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh; /* You can adjust this height as needed */
+    background-color: #333; /* Add a background color for the header */
+    color: white; /* Set text color */
+}
+
+.header h1 {
+    font-size: 1.5rem; /* Adjust font size */
+    margin: 0;
+    padding: 20px; /* Add padding for spacing */
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Add buffer space */
+  }
+  
+  .search-bar form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input[type="text"],
+  .search-bar button {
+    margin: 5px; /* Add spacing between input and button */
+  }
+  
+  
