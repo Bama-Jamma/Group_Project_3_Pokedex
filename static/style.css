@@ -10,10 +10,8 @@
     stroke-width: 1;
   }
 
-body {
+  body {
     background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
@@ -23,6 +21,7 @@ body {
 .pokedex {
     width: 350px;
     height: 250px;
+    margin: 0 auto; /* Center the element horizontally */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -31,12 +30,14 @@ body {
     border-radius: 20px;
     padding: 10px;
     box-sizing: border-box;
-    transition: transform 0.3s ease; /* Only apply transition to transform property */
+    transition: transform 0.3s ease;
     position: relative;
     overflow: hidden;
     box-shadow: 0px 10px 20px rgba(0,0,0,0.5);
     transform: perspective(600px) rotateX(0deg);
     transform-style: preserve-3d;
+    margin-left: auto; /* Push the pokedex to the right */
+    margin-right: 10px; /* Add spacing to the right */
 }
 
 .shell {
@@ -160,3 +161,70 @@ h2 {
 .dot:hover {
     background-color: #333;
 }  
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh; /* You can adjust this height as needed */
+    background-color: #333; /* Add a background color for the header */
+    color: white; /* Set text color */
+}
+
+.header h1 {
+    font-size: 1.5rem; /* Adjust font size */
+    margin: 0;
+    padding: 20px; /* Add padding for spacing */
+}
+
+.search-bar,
+.dropdown {
+  margin: 10px; /* Add spacing around the elements */
+  text-align: center; /* Center the content horizontally */
+}
+  
+  .search-bar form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input[type="text"],
+  .search-bar button {
+    margin: 5px; /* Add spacing between input and button */
+  }
+
+  .container {
+    margin-top: 20px; /* Add margin to the top of the container */
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .col-md-2 {
+    flex-basis: 25%; /* Adjust the width based on your design */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .col-md-10 {
+    flex-basis: 75%; /* Adjust the width based on your design */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-md-12 {
+    flex-basis: calc(83.33% - 20px); /* Adjust based on desired spacing */
+  }
+  
+  .graphs {
+    width: 100%;
+    margin-top: 20px; /* Add buffer space below the graphs */
+  }
+
+  .custom-container {
+    margin-left: 0; /* Remove the left margin */
+    margin-right: auto; /* Center the container horizontally */
+  }

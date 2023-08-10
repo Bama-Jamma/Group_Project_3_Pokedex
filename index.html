@@ -10,85 +10,90 @@
   <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
-
-  <!---Test Comment-->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 jumbotron text-center">
-        <h1>Data Visualization Project with Pokémon Data</h1>
-      </div>
-    </div>
+  <div class="custom-container">
     <div class="row">
       <div class="col-md-2">
-        <h5>Choose a Pokemon:</h5>
+        <div class="search-bar">
+          <form id="searchForm">
+            <input type="text" id="searchInput" placeholder="Enter Pokemon Number">
+            <button type="submit">Search</button>
+          </form>
+        </div>
+        <div class="dropdown">
+          <h5>Choose a Pokemon:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
-      <div class="panel panel-primary">
+        </div>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <div id="pokedex" class="pokedex closed">
+          <div class="shell top-shell">
+            <div class="dot indicator-left"></div>
+            <div class="dot indicator-right"></div>
+            <div class="dot left-dot"></div>
+            <div class="dot right-dot"></div>
+          </div>
+
+          <div class="inner-screen">
+            <div class="screen">
+              <iframe src="https://giphy.com/embed/YyL1MxPDVJ9q8" class="gif" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="shell bottom-shell">
+            <div class="dot button-a"></div>
+            <div class="dot button-b"></div>
+            <div class="porthole bottom-porthole"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Pokemon profile</h3>
           </div>
           <div id="pokemonProfile" class="panel-body">
-          <div id="pokemon_profile_main"></div>
+            <div id="pokemon_profile_main"></div>
+          </div>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Catch Rate Info (Base 255):</h3>
+          </div>
+          <div id="catchrate_infographic" class="panel-body">
+            <div id="catchrate_infographic"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div id="bar"></div>
+          </div>
+          <div class="col-md-6">
+            <div id="gauge"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="bubble"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div id="comparison_web" style="width: 400px; height: 300px;"></div>
+          </div>
+          <div class="col-md-6">
+            <div id="speed_chart"></div>
           </div>
         </div>
       </div>
-
-      <div id="catchrate_infographic"></div>
-
-      <div class="col-md-5">
-        <div id="bar"></div>
-      </div>
-      <div class="col-md-5">
-        <div id="gauge"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div id="bubble"></div>
-      </div>
     </div>
   </div>
-
-  <div id="pokedex" class="pokedex closed">
-    <div class="shell top-shell">
-      <div class="dot indicator-left"></div>
-      <div class="dot indicator-right"></div>
-      <div class="dot left-dot"></div>
-      <div class="dot right-dot"></div>
-    </div>
-
-    <div class="inner-screen">
-      <div class="screen">
-        <iframe src="https://giphy.com/embed/YyL1MxPDVJ9q8" class="gif" frameBorder="0" allowFullScreen></iframe>
-      </div>
-    </div>
-
-      <div class="temp-welcome">
-        <div class="welcome">
-          <h2>Welcome to the Pokedex</h2>
-          <img src="https://giphy.com/embed/YyL1MxPDVJ9q8" class="gif" frameBorder="0">
-          <p>Search for a Pokemon:</p>
-        </div>
-      </div>
-
-      <div class="shell bottom-shell">
-        <div class="dot button-a"></div>
-        <div class="dot button-b"></div>
-        <div class="porthole bottom-porthole"></div>
-      </div>
-  </div>  
-
-  <div class="search-bar">
-    <form id="searchForm">
-        <input type="text" id="searchInput" placeholder="Enter Pokemon name">
-        <button type="submit">Search</button>
-    </form>
-  </div>
-
-    <!-- HTML content for comparison radar chart -->
-    <div id="comparison_web" style="width: 400px; height: 300px;"></div>
-
-    <!-- HTML content for speed comparison chart -->
-    <div id="speed_chart"></div>
 
 <!-- D3.js -->
 <script src="https://d3js.org/d3.v7.min.js"></script>
