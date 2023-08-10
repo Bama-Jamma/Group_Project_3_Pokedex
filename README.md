@@ -1,7 +1,5 @@
 # Pokedex Data Visualization Project
 
-test
-
 Welcome to the Pokedex Data Visualization Project! This project aims to provide an interactive way to explore Pokemon data through visualizations. It utilizes a Flask API to retrieve data from an SQLite database and presents it using HTML, JavaScript, and D3.js for visually appealing charts.
 
 ## Summary
