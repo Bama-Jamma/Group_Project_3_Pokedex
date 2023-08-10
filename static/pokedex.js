@@ -260,10 +260,7 @@ function createSpeedChart(SelectedPokemonSpeedData, averageStatsData, width, hei
         .text("Speed");
 }
 
-// Event listener for the search button
-document.getElementById("searchForm").addEventListener("submit", () => {
-    event.preventDefault();
-    searchQuery = document.getElementById("searchInput").value;
+function fetchPokemonData(searchQuery) {
 
     // Calls our search functions at the same time to query all our needed data
     Promise.all([fetchPokemonProfile(searchQuery), fetchPokemonStats(searchQuery), fetchPokemonSpeed(searchQuery), fetchPokemonCatch(searchQuery)])
@@ -300,12 +297,15 @@ document.getElementById("searchForm").addEventListener("submit", () => {
             console.error('Error fetching data:', error);
         });
 
+    }
+
 // Get the .pokedex element
 var pokedex = document.getElementById('pokedex');
 var screen = document.querySelector('.screen');
 var currentPokemon = 1;
 
 function updateScreen(pokemonData) {
+    console.log('Updating screen with:', pokemonData);
     screen.innerHTML = ''; // Clear the content of the screen div
     screen.innerHTML = `
         <h2>${pokemonData.name}</h2>
@@ -313,28 +313,30 @@ function updateScreen(pokemonData) {
     `;
 }
 
-function fetchPokemon(id) {
+function fetchPokemon(searchQuery) {
+    console.log('Fetching Pokemon:', searchQuery);
     fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery}`)
         .then(response => response.json())
         .then(data => updateScreen(data))
         .catch(error => console.error(error));
+    
 }
 
 pokedex.addEventListener('click', function() {
     if (pokedex.classList.contains('closed')) {
         pokedex.classList.remove('closed');
         pokedex.classList.add('open');
-        fetchPokemon(currentPokemon);
-        currentPokemon++;
+        fetchPokemon(searchQuery);
     } else {
         pokedex.classList.remove('open');
         pokedex.classList.add('closed');
+        fetchPokemon(searchQuery);
     }
 });
-});
- function init() {
-    // Select dropdown menu 
 
+ function init() {
+
+    // Select dropdown menu 
     var dropdown = document.getElementById('selDataset');
     
     // URL to fetch data from
@@ -365,25 +367,25 @@ pokedex.addEventListener('click', function() {
       }     
     }
   }
-init(); 
 
 // Function to fetch pokemon profile based on the value selcted in dropdown
-function optionChanged(selectedValue){
-  var url = 'http://127.0.0.1:8000/pokemon-profile/' + selectedValue;
-  
-  var request = new XMLHttpRequest();
-  request.open('GET', url, true);
-  request.send();
+function optionChanged(searchQuery){
 
-  request.onload = function() {
-    if (request.status === 200) {
-      var data = JSON.parse(request.responseText);
+    fetchPokemonData(searchQuery);
 
-      document.getElementById('pokemon_profile_main').innerText = JSON.stringify(data, null, 2);
+    fetchPokemon(searchQuery);
 
-     } 
-     // If Request to API fails, log error
-     else {
-      console.error(error);
-    }     
-  }}
+    updateScreen(pokemonData)
+
+}
+
+// Event listener for the search button
+document.getElementById("searchForm").addEventListener("submit", () => {
+    event.preventDefault();
+    searchQuery = document.getElementById("searchInput").value;
+
+    fetchPokemonData(searchQuery)
+
+});
+
+init(); 
