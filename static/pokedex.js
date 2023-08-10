@@ -314,7 +314,7 @@ function updateScreen(pokemonData) {
 }
 
 function fetchPokemon(id) {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery}`)
         .then(response => response.json())
         .then(data => updateScreen(data))
         .catch(error => console.error(error));
